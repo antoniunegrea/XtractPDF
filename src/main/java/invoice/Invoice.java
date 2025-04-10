@@ -1,7 +1,9 @@
 package invoice;
 
+import model.accountingPartyComponents.AccountingCustomerParty;
+import model.accountingPartyComponents.AccountingSupplierParty;
+
 import javax.xml.bind.annotation.*;
-import java.time.LocalDate;
 
 @XmlRootElement(name = "Invoice", namespace = "urn:oasis:names:specification:ubl:schema:xsd:Invoice-2")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -36,12 +38,22 @@ public class Invoice
             ":CommonBasicComponents-2")
     private String taxCurrencyCode;
 
+    @XmlElement(name = "AccountingSupplierParty", namespace = "urn:oasis:names:specification:ubl:schema:xsd" +
+            ":CommonAggregateComponents-2")
+    private AccountingSupplierParty accountingSupplierParty;
+
+    @XmlElement(name = "AccountingCustomerParty", namespace = "urn:oasis:names:specification:ubl:schema:xsd" +
+            ":CommonAggregateComponents-2")
+    private AccountingCustomerParty accountingCustomerParty;
+
     public Invoice()
     {
     }
 
     public Invoice(String ublVersionID, String customizationID, String id, String issueDate,
-            String dueDate, String invoiceTypeCode, String documentCurrencyCode, String taxCurrencyCode)
+            String dueDate, String invoiceTypeCode, String documentCurrencyCode,
+            String taxCurrencyCode, AccountingSupplierParty accountingSupplierParty,
+            AccountingCustomerParty accountingCustomerParty)
     {
         this.ublVersionID = ublVersionID;
         this.customizationID = customizationID;
@@ -51,8 +63,11 @@ public class Invoice
         this.invoiceTypeCode = invoiceTypeCode;
         this.documentCurrencyCode = documentCurrencyCode;
         this.taxCurrencyCode = taxCurrencyCode;
+        this.accountingSupplierParty = accountingSupplierParty;
+        this.accountingCustomerParty = accountingCustomerParty;
     }
 
+    // Getters and Setters
     public String getUblVersionID()
     {
         return ublVersionID;
@@ -133,6 +148,26 @@ public class Invoice
         this.taxCurrencyCode = taxCurrencyCode;
     }
 
+    public AccountingSupplierParty getAccountingSupplierParty()
+    {
+        return accountingSupplierParty;
+    }
+
+    public void setAccountingSupplierParty(AccountingSupplierParty accountingSupplierParty)
+    {
+        this.accountingSupplierParty = accountingSupplierParty;
+    }
+
+    public AccountingCustomerParty getAccountingCustomerParty()
+    {
+        return accountingCustomerParty;
+    }
+
+    public void setAccountingCustomerParty(AccountingCustomerParty accountingCustomerParty)
+    {
+        this.accountingCustomerParty = accountingCustomerParty;
+    }
+
     @Override
     public String toString()
     {
@@ -145,6 +180,8 @@ public class Invoice
                 ", invoiceTypeCode='" + invoiceTypeCode + '\'' +
                 ", documentCurrencyCode='" + documentCurrencyCode + '\'' +
                 ", taxCurrencyCode='" + taxCurrencyCode + '\'' +
-                '}';
+                ", accountingSupplierParty=" + accountingSupplierParty +
+                ", accountingCustomerParty=" + accountingCustomerParty +
+                "}";
     }
 }
