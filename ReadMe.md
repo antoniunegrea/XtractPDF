@@ -1,0 +1,1 @@
+https://docs.peppol.eu/poacc/billing/3.0/syntax/ubl-invoice/

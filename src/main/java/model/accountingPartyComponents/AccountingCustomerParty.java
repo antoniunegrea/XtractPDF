@@ -12,11 +12,6 @@ public class AccountingCustomerParty
     {
     }
 
-    public AccountingCustomerParty(Party party)
-    {
-        this.party = party;
-    }
-
     public Party getParty()
     {
         return party;

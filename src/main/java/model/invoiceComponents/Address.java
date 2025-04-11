@@ -1,9 +1,11 @@
-package model.accountingPartyComponents.partyComponents;
+package model.invoiceComponents;
 
-import javax.xml.bind.annotation.*;
+import model.accountingPartyComponents.partyComponents.AddressLine;
+import model.accountingPartyComponents.partyComponents.Country;
 
-@XmlAccessorType(XmlAccessType.FIELD)
-public class PostalAddress
+import javax.xml.bind.annotation.XmlElement;
+
+public class Address
 {
     @XmlElement(name = "StreetName", namespace = "urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2")
     private String streetName;
@@ -30,10 +32,21 @@ public class PostalAddress
             "-2")
     private Country country;
 
-    public PostalAddress()
+    public Address()
     {
     }
 
+    public Address(String streetName, String additionalStreetName, String cityName, String postalZone,
+            String countrySubEntity, AddressLine addressLine, Country country)
+    {
+        this.streetName = streetName;
+        this.additionalStreetName = additionalStreetName;
+        this.cityName = cityName;
+        this.postalZone = postalZone;
+        this.countrySubEntity = countrySubEntity;
+        this.addressLine = addressLine;
+        this.country = country;
+    }
 
     public String getStreetName()
     {
@@ -108,7 +121,7 @@ public class PostalAddress
     @Override
     public String toString()
     {
-        return "PostalAddress{" +
+        return "Address{" +
                 "streetName='" + streetName + '\'' +
                 ", additionalStreetName='" + additionalStreetName + '\'' +
                 ", cityName='" + cityName + '\'' +
@@ -118,5 +131,4 @@ public class PostalAddress
                 ", country=" + country +
                 '}';
     }
-
 }

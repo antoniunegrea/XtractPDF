@@ -13,15 +13,14 @@ public class PartyLegalEntity
     @XmlElement(name = "CompanyID", namespace = "urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2")
     private String companyID;
 
+    @XmlElement(name = "CompanyLegalForm", namespace = "urn:oasis:names:specification:ubl:schema:xsd" +
+            ":CommonBasicComponents-2")
+    private String companyLegalForm;
+
     public PartyLegalEntity()
     {
     }
 
-    public PartyLegalEntity(String registrationName, String companyID)
-    {
-        this.registrationName = registrationName;
-        this.companyID = companyID;
-    }
 
     public String getRegistrationName()
     {
@@ -34,10 +33,18 @@ public class PartyLegalEntity
         return companyID;
     }
 
+    public String getCompanyLegalForm()
+    {
+        return companyLegalForm;
+    }
 
     @Override
     public String toString()
     {
-        return "PartyLegalEntity{registrationName='" + registrationName + "', companyID='" + companyID + "'}";
+        return "PartyLegalEntity{" +
+                "registrationName='" + registrationName + '\'' +
+                ", companyID='" + companyID + '\'' +
+                ", companyLegalForm='" + companyLegalForm + '\'' +
+                '}';
     }
 }

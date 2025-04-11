@@ -2,6 +2,8 @@ package model.accountingPartyComponents;
 
 import javax.xml.bind.annotation.*;
 
+import javax.xml.bind.annotation.*;
+
 @XmlAccessorType(XmlAccessType.FIELD)
 public class AccountingSupplierParty
 {
@@ -10,11 +12,6 @@ public class AccountingSupplierParty
 
     public AccountingSupplierParty()
     {
-    }
-
-    public AccountingSupplierParty(Party party)
-    {
-        this.party = party;
     }
 
     public Party getParty()

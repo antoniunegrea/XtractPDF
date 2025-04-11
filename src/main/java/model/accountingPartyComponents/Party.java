@@ -1,6 +1,5 @@
 package model.accountingPartyComponents;
 
-import accountingPartyComponents.partyComponents.*;
 import model.accountingPartyComponents.partyComponents.*;
 
 import javax.xml.bind.annotation.*;
@@ -14,6 +13,10 @@ public class Party
     @XmlElement(name = "PartyIdentification", namespace = "urn:oasis:names:specification:ubl:schema:xsd" +
             ":CommonAggregateComponents-2")
     private PartyIdentification partyIdentification;
+
+    @XmlElement(name = "PartyName", namespace = "urn:oasis:names:specification:ubl:schema:xsd" +
+            ":CommonAggregateComponents-2")
+    private PartyName partyName;
 
     @XmlElement(name = "PostalAddress", namespace = "urn:oasis:names:specification:ubl:schema:xsd" +
             ":CommonAggregateComponents-2")
@@ -35,16 +38,6 @@ public class Party
     {
     }
 
-    public Party(String endpointID, PartyIdentification partyIdentification, PostalAddress postalAddress,
-            PartyTaxScheme partyTaxScheme, PartyLegalEntity partyLegalEntity, Contact contact)
-    {
-        this.endpointID = endpointID;
-        this.partyIdentification = partyIdentification;
-        this.postalAddress = postalAddress;
-        this.partyTaxScheme = partyTaxScheme;
-        this.partyLegalEntity = partyLegalEntity;
-        this.contact = contact;
-    }
 
     public String getEndpointID()
     {
@@ -69,6 +62,16 @@ public class Party
     public PostalAddress getPostalAddress()
     {
         return postalAddress;
+    }
+
+    public PartyName getPartyName()
+    {
+        return partyName;
+    }
+
+    public void setPartyName(PartyName partyName)
+    {
+        this.partyName = partyName;
     }
 
     public void setPostalAddress(PostalAddress postalAddress)
@@ -110,12 +113,13 @@ public class Party
     public String toString()
     {
         return "Party{" +
-                "endpointID=" + endpointID +
+                "endpointID='" + endpointID + '\'' +
                 ", partyIdentification=" + partyIdentification +
+                ", partyName=" + partyName +
                 ", postalAddress=" + postalAddress +
                 ", partyTaxScheme=" + partyTaxScheme +
                 ", partyLegalEntity=" + partyLegalEntity +
                 ", contact=" + contact +
-                "}";
+                '}';
     }
 }
