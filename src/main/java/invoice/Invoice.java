@@ -1,16 +1,22 @@
 package invoice;
 
-import model.accountingPartyComponents.AccountingCustomerParty;
-import model.accountingPartyComponents.AccountingSupplierParty;
-import model.accountingPartyComponents.PayeeParty;
-import model.accountingPartyComponents.partyComponents.TaxRepresentativeParty;
+import model.Allowance.AllowanceCharge;
+import model.delivery.Delivery;
+import model.invoiceLine.InvoiceLine;
+import model.legalMonetary.LegalMonetaryTotal;
+import model.parties.AccountingCustomerParty;
+import model.parties.AccountingSupplierParty;
+import model.parties.PayeeParty;
+import model.parties.TaxRepresentativeParty;
+import model.documentReferences.*;
 import model.invoiceComponents.BillingReference;
-import model.invoiceComponents.InvoicePeriod;
+import model.invoiceLine.InvoicePeriod;
 import model.invoiceComponents.*;
+import model.paymentMeans.PaymentMeans;
+import model.paymentTerms.PaymentTerms;
+import model.tax.TaxTotal;
 
 import javax.xml.bind.annotation.*;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @XmlRootElement(name = "Invoice", namespace = "urn:oasis:names:specification:ubl:schema:xsd:Invoice-2")
@@ -32,21 +38,21 @@ public class Invoice
     private String id;
 
     @XmlElement(name = "IssueDate", namespace = "urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2")
-    private LocalDate issueDate;
+    private String issueDate;
 
     @XmlElement(name = "DueDate", namespace = "urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2")
-    private LocalDate dueDate;
+    private String dueDate;
 
     @XmlElement(name = "InvoiceTypeCode", namespace = "urn:oasis:names:specification:ubl:schema:xsd" +
             ":CommonBasicComponents-2")
     private String invoiceTypeCode;
 
     @XmlElement(name = "Note", namespace = "urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2")
-    private List<String> note;
+    private String note;
 
     @XmlElement(name = "TaxPointDate", namespace = "urn:oasis:names:specification:ubl:schema:xsd" +
             ":CommonBasicComponents-2")
-    private LocalDate taxPointDate;
+    private String taxPointDate;
 
     @XmlElement(name = "DocumentCurrencyCode", namespace = "urn:oasis:names:specification:ubl:schema:xsd" +
             ":CommonBasicComponents-2")
@@ -66,7 +72,7 @@ public class Invoice
 
     @XmlElement(name = "InvoicePeriod", namespace = "urn:oasis:names:specification:ubl:schema:xsd" +
             ":CommonAggregateComponents-2")
-    private List<InvoicePeriod> invoicePeriod;
+    private InvoicePeriod invoicePeriod;
 
     @XmlElement(name = "OrderReference", namespace = "urn:oasis:names:specification:ubl:schema:xsd" +
             ":CommonAggregateComponents-2")
@@ -78,23 +84,23 @@ public class Invoice
 
     @XmlElement(name = "DespatchDocumentReference", namespace = "urn:oasis:names:specification:ubl:schema:xsd" +
             ":CommonAggregateComponents-2")
-    private List<DocumentReference> despatchDocumentReference;
+    private InvoiceDocumentReference despatchDocumentReference;
 
     @XmlElement(name = "ReceiptDocumentReference", namespace = "urn:oasis:names:specification:ubl:schema:xsd" +
             ":CommonAggregateComponents-2")
-    private List<DocumentReference> receiptDocumentReference;
+    private DespatchDocumentReference receiptDocumentReference;
 
     @XmlElement(name = "OriginatorDocumentReference", namespace = "urn:oasis:names:specification:ubl:schema:xsd" +
             ":CommonAggregateComponents-2")
-    private List<DocumentReference> originatorDocumentReference;
+    private OriginatorDocumentReference originatorDocumentReference;
 
     @XmlElement(name = "ContractDocumentReference", namespace = "urn:oasis:names:specification:ubl:schema:xsd" +
             ":CommonAggregateComponents-2")
-    private List<DocumentReference> contractDocumentReference;
+    private ContractDocumentReference contractDocumentReference;
 
     @XmlElement(name = "AdditionalDocumentReference", namespace = "urn:oasis:names:specification:ubl:schema:xsd" +
             ":CommonAggregateComponents-2")
-    private List<DocumentReference> additionalDocumentReference;
+    private List<AdditionalDocumentReference> additionalDocumentReference;
 
     @XmlElement(name = "ProjectReference", namespace = "urn:oasis:names:specification:ubl:schema:xsd" +
             ":CommonAggregateComponents-2")
@@ -118,7 +124,7 @@ public class Invoice
 
     @XmlElement(name = "Delivery", namespace = "urn:oasis:names:specification:ubl:schema:xsd" +
             ":CommonAggregateComponents-2")
-    private List<Delivery> delivery;
+    private Delivery delivery;
 
     @XmlElement(name = "PaymentMeans", namespace = "urn:oasis:names:specification:ubl:schema:xsd" +
             ":CommonAggregateComponents-2")
@@ -126,7 +132,7 @@ public class Invoice
 
     @XmlElement(name = "PaymentTerms", namespace = "urn:oasis:names:specification:ubl:schema:xsd" +
             ":CommonAggregateComponents-2")
-    private List<PaymentTerms> paymentTerms;
+    private PaymentTerms paymentTerms;
 
     @XmlElement(name = "AllowanceCharge", namespace = "urn:oasis:names:specification:ubl:schema:xsd" +
             ":CommonAggregateComponents-2")
@@ -146,23 +152,8 @@ public class Invoice
 
     public Invoice()
     {
-        this.note = new ArrayList<>();
-        this.invoicePeriod = new ArrayList<>();
-        this.billingReference = new ArrayList<>();
-        this.despatchDocumentReference = new ArrayList<>();
-        this.receiptDocumentReference = new ArrayList<>();
-        this.originatorDocumentReference = new ArrayList<>();
-        this.contractDocumentReference = new ArrayList<>();
-        this.additionalDocumentReference = new ArrayList<>();
-        this.delivery = new ArrayList<>();
-        this.paymentMeans = new ArrayList<>();
-        this.paymentTerms = new ArrayList<>();
-        this.allowanceCharge = new ArrayList<>();
-        this.taxTotal = new ArrayList<>();
-        this.invoiceLine = new ArrayList<>();
     }
 
-    // Getters and Setters
     public String getUblVersionID()
     {
         return ublVersionID;
@@ -203,22 +194,22 @@ public class Invoice
         this.id = id;
     }
 
-    public LocalDate getIssueDate()
+    public String getIssueDate()
     {
         return issueDate;
     }
 
-    public void setIssueDate(LocalDate issueDate)
+    public void setIssueDate(String issueDate)
     {
         this.issueDate = issueDate;
     }
 
-    public LocalDate getDueDate()
+    public String getDueDate()
     {
         return dueDate;
     }
 
-    public void setDueDate(LocalDate dueDate)
+    public void setDueDate(String dueDate)
     {
         this.dueDate = dueDate;
     }
@@ -233,22 +224,22 @@ public class Invoice
         this.invoiceTypeCode = invoiceTypeCode;
     }
 
-    public List<String> getNote()
+    public String getNote()
     {
         return note;
     }
 
-    public void setNote(List<String> note)
+    public void setNote(String note)
     {
         this.note = note;
     }
 
-    public LocalDate getTaxPointDate()
+    public String getTaxPointDate()
     {
         return taxPointDate;
     }
 
-    public void setTaxPointDate(LocalDate taxPointDate)
+    public void setTaxPointDate(String taxPointDate)
     {
         this.taxPointDate = taxPointDate;
     }
@@ -273,25 +264,6 @@ public class Invoice
         this.taxCurrencyCode = taxCurrencyCode;
     }
 
-    public String getPricingCurrencyCode()
-    {
-        return pricingCurrencyCode;
-    }
-
-    public void setPricingCurrencyCode(String pricingCurrencyCode)
-    {
-        this.pricingCurrencyCode = pricingCurrencyCode;
-    }
-
-    public String getPaymentCurrencyCode()
-    {
-        return paymentCurrencyCode;
-    }
-
-    public void setPaymentCurrencyCode(String paymentCurrencyCode)
-    {
-        this.paymentCurrencyCode = paymentCurrencyCode;
-    }
 
     public String getBuyerReference()
     {
@@ -313,24 +285,15 @@ public class Invoice
         this.accountingCost = accountingCost;
     }
 
-    public List<InvoicePeriod> getInvoicePeriod()
+
+    public InvoicePeriod getInvoicePeriod()
     {
         return invoicePeriod;
     }
 
-    public void setInvoicePeriod(List<InvoicePeriod> invoicePeriod)
+    public void setInvoicePeriod(InvoicePeriod invoicePeriod)
     {
         this.invoicePeriod = invoicePeriod;
-    }
-
-    public OrderReference getOrderReference()
-    {
-        return orderReference;
-    }
-
-    public void setOrderReference(OrderReference orderReference)
-    {
-        this.orderReference = orderReference;
     }
 
     public List<BillingReference> getBillingReference()
@@ -343,52 +306,62 @@ public class Invoice
         this.billingReference = billingReference;
     }
 
-    public List<DocumentReference> getDespatchDocumentReference()
+    public OrderReference getOrderReference()
+    {
+        return orderReference;
+    }
+
+    public void setOrderReference(OrderReference orderReference)
+    {
+        this.orderReference = orderReference;
+    }
+
+    public InvoiceDocumentReference getDespatchDocumentReference()
     {
         return despatchDocumentReference;
     }
 
-    public void setDespatchDocumentReference(List<DocumentReference> despatchDocumentReference)
+    public void setDespatchDocumentReference(InvoiceDocumentReference despatchDocumentReference)
     {
         this.despatchDocumentReference = despatchDocumentReference;
     }
 
-    public List<DocumentReference> getReceiptDocumentReference()
+    public DespatchDocumentReference getReceiptDocumentReference()
     {
         return receiptDocumentReference;
     }
 
-    public void setReceiptDocumentReference(List<DocumentReference> receiptDocumentReference)
+    public void setReceiptDocumentReference(DespatchDocumentReference receiptDocumentReference)
     {
         this.receiptDocumentReference = receiptDocumentReference;
     }
 
-    public List<DocumentReference> getOriginatorDocumentReference()
+    public OriginatorDocumentReference getOriginatorDocumentReference()
     {
         return originatorDocumentReference;
     }
 
-    public void setOriginatorDocumentReference(List<DocumentReference> originatorDocumentReference)
+    public void setOriginatorDocumentReference(OriginatorDocumentReference originatorDocumentReference)
     {
         this.originatorDocumentReference = originatorDocumentReference;
     }
 
-    public List<DocumentReference> getContractDocumentReference()
+    public ContractDocumentReference getContractDocumentReference()
     {
         return contractDocumentReference;
     }
 
-    public void setContractDocumentReference(List<DocumentReference> contractDocumentReference)
+    public void setContractDocumentReference(ContractDocumentReference contractDocumentReference)
     {
         this.contractDocumentReference = contractDocumentReference;
     }
 
-    public List<DocumentReference> getAdditionalDocumentReference()
+    public List<AdditionalDocumentReference> getAdditionalDocumentReference()
     {
         return additionalDocumentReference;
     }
 
-    public void setAdditionalDocumentReference(List<DocumentReference> additionalDocumentReference)
+    public void setAdditionalDocumentReference(List<AdditionalDocumentReference> additionalDocumentReference)
     {
         this.additionalDocumentReference = additionalDocumentReference;
     }
@@ -443,12 +416,12 @@ public class Invoice
         this.taxRepresentativeParty = taxRepresentativeParty;
     }
 
-    public List<Delivery> getDelivery()
+    public Delivery getDelivery()
     {
         return delivery;
     }
 
-    public void setDelivery(List<Delivery> delivery)
+    public void setDelivery(Delivery delivery)
     {
         this.delivery = delivery;
     }
@@ -463,12 +436,12 @@ public class Invoice
         this.paymentMeans = paymentMeans;
     }
 
-    public List<PaymentTerms> getPaymentTerms()
+    public PaymentTerms getPaymentTerms()
     {
         return paymentTerms;
     }
 
-    public void setPaymentTerms(List<PaymentTerms> paymentTerms)
+    public void setPaymentTerms(PaymentTerms paymentTerms)
     {
         this.paymentTerms = paymentTerms;
     }
@@ -528,8 +501,6 @@ public class Invoice
                 ", taxPointDate=" + taxPointDate +
                 ", documentCurrencyCode='" + documentCurrencyCode + '\'' +
                 ", taxCurrencyCode='" + taxCurrencyCode + '\'' +
-                ", pricingCurrencyCode='" + pricingCurrencyCode + '\'' +
-                ", paymentCurrencyCode='" + paymentCurrencyCode + '\'' +
                 ", buyerReference='" + buyerReference + '\'' +
                 ", accountingCost='" + accountingCost + '\'' +
                 ", invoicePeriod=" + invoicePeriod +
